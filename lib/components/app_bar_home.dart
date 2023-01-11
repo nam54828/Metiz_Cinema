@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:metiz_cinema/components/commingsoon.dart';
-import 'package:metiz_cinema/components/nowshow.dart';
+import 'package:metiz_cinema/screen/commingsoon.dart';
+import 'package:metiz_cinema/screen/nowshow.dart';
 
 class AppBarHome extends StatefulWidget {
   const AppBarHome({Key? key}) : super(key: key);
@@ -23,14 +23,10 @@ class _AppBarHomeState extends State<AppBarHome> {
   Widget build(BuildContext context) => DefaultTabController(
     length: 2,
     child: Scaffold(
+      backgroundColor: Color.fromRGBO(14, 29, 47, 1),
       appBar: AppBar(
         title: Image.asset('images/logo_metiz.png', height: 70,),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: (){
-          },
-        ),
         actions: [
           IconButton(
             onPressed: (){},
@@ -46,10 +42,44 @@ class _AppBarHomeState extends State<AppBarHome> {
           ),
         )
       ),
-      body: TabBarView(children: [
-        nowShow(),
-        commingSoon()
-      ])
+      body: Container(
+        height: 400,
+        color: Colors.white,
+        child: TabBarView(children: [
+          nowShow(),
+          commingSoon()
+        ]),
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            ListTile(
+              leading: Icon(Icons.home, color: Colors.green,),
+              title: Text('Trang chủ'),
+            ),
+            ListTile(
+              leading: Icon(Icons.calendar_month, color: Colors.orange,),
+              title: Text('Lịch chiếu'),
+            ),
+            ListTile(
+              leading: Icon(Icons.local_movies, color: Colors.blueAccent,),
+              title: Text('Phim'),
+            ),
+            ListTile(
+              leading: Icon(Icons.drafts, color: Colors.purple,),
+              title: Text('Tin tức & Khuyễn mãi'),
+            ),
+            ListTile(
+              leading: Icon(Icons.rss_feed, color: Colors.greenAccent,),
+              title: Text('Blog phim'),
+            ),
+            ListTile(
+              leading: Icon(Icons.error, color: Colors.lightBlueAccent,),
+              title: Text('Về Metiz Cinema'),
+            ),
+          ],
+        ),
+      ),
     ),
   );
 }

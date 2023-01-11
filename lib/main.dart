@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
-import 'screen/home.dart';
 
 void main() {
   runApp(const MyApp());
