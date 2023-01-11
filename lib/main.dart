@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:metiz_cinema/components/about_introduce.dart';
+import 'package:metiz_cinema/components/about_setting.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
+import 'package:metiz_cinema/screen/about.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Metiz',
       debugShowCheckedModeBanner: false,
-      home: AppBarHome(),
+      home:About(),
     );
   }
 }

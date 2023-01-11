@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:metiz_cinema/main.dart';
+import 'package:metiz_cinema/screen/about.dart';
 import 'package:metiz_cinema/screen/commingsoon.dart';
 import 'package:metiz_cinema/screen/nowshow.dart';
 
@@ -56,6 +58,9 @@ class _AppBarHomeState extends State<AppBarHome> {
             ListTile(
               leading: Icon(Icons.home, color: Colors.green,),
               title: Text('Trang chủ'),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppBarHome()));
+              },
             ),
             ListTile(
               leading: Icon(Icons.calendar_month, color: Colors.orange,),
@@ -76,6 +81,9 @@ class _AppBarHomeState extends State<AppBarHome> {
             ListTile(
               leading: Icon(Icons.error, color: Colors.lightBlueAccent,),
               title: Text('Về Metiz Cinema'),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => About()));
+              },
             ),
           ],
         ),
