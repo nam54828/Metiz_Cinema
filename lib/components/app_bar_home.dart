@@ -1,8 +1,14 @@
+
 import 'package:flutter/material.dart';
 import 'package:metiz_cinema/main.dart';
 import 'package:metiz_cinema/screen/about.dart';
+import 'package:metiz_cinema/screen/blog.dart';
 import 'package:metiz_cinema/screen/commingsoon.dart';
+import 'package:metiz_cinema/screen/LOGIN/login.dart';
+import 'package:metiz_cinema/screen/movies.dart';
+import 'package:metiz_cinema/screen/news.dart';
 import 'package:metiz_cinema/screen/nowshow.dart';
+import 'package:metiz_cinema/screen/showtimes.dart';
 
 class AppBarHome extends StatefulWidget {
   const AppBarHome({Key? key}) : super(key: key);
@@ -55,6 +61,11 @@ class _AppBarHomeState extends State<AppBarHome> {
       drawer: Drawer(
         child: Column(
           children: [
+            Container(
+              height: 90,
+              color: Colors.black,
+                padding: EdgeInsets.only(left: 5,top: 15,bottom: 5),
+                child: headerWidget(context)),
             ListTile(
               leading: Icon(Icons.home, color: Colors.green,),
               title: Text('Trang chủ'),
@@ -65,18 +76,30 @@ class _AppBarHomeState extends State<AppBarHome> {
             ListTile(
               leading: Icon(Icons.calendar_month, color: Colors.orange,),
               title: Text('Lịch chiếu'),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => showTimes()));
+              },
             ),
             ListTile(
               leading: Icon(Icons.local_movies, color: Colors.blueAccent,),
               title: Text('Phim'),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Movies()));
+              },
             ),
             ListTile(
               leading: Icon(Icons.drafts, color: Colors.purple,),
               title: Text('Tin tức & Khuyễn mãi'),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => News()));
+              },
             ),
             ListTile(
               leading: Icon(Icons.rss_feed, color: Colors.greenAccent,),
               title: Text('Blog phim'),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Blog()));
+              },
             ),
             ListTile(
               leading: Icon(Icons.error, color: Colors.lightBlueAccent,),
@@ -91,3 +114,34 @@ class _AppBarHomeState extends State<AppBarHome> {
     ),
   );
 }
+Widget headerWidget(context){
+  const url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEKWsrQjrLklNeCqRe4FXVCTLKzyQaXWqwWUDyFvq8e1YXaPFu-thyqOzkiwXLshME9H0&usqp=CAU';
+  return Row(
+    children: [
+      const CircleAvatar(
+        radius: 30,
+        backgroundImage: NetworkImage(url),
+      ),
+      const SizedBox(width: 20,),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
+            child: Container(
+              padding: EdgeInsets.only(top: 30),
+              child: Text('ĐĂNG NHẬP/ĐĂNG KÝ',style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
+              ),
+              ),
+            ),
+            onTap: (){
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+            },
+          )
+        ],
+      )
+    ],
+  );
+}
+
