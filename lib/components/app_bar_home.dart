@@ -51,13 +51,14 @@ class _AppBarHomeState extends State<AppBarHome> {
         )
       ),
       body: Container(
-        height: 400,
+        height: 450,
         color: Colors.white,
         child: TabBarView(children: [
           nowShow(),
           commingSoon()
         ]),
       ),
+
       drawer: Drawer(
         child: Column(
           children: [
