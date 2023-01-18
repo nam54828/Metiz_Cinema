@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "626247571177",
+    "project_id": "metizcinema-5734a",
+    "storage_bucket": "metizcinema-5734a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626247571177:android:2438f5b9971d8aecf24278",
+        "android_client_info": {
+          "package_name": "com.example.metiz_cinema"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626247571177-kpnv5of6dqr7aao42rpgqu507t04h252.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.metiz_cinema",
+            "certificate_hash": "ef31890f557f1be9918527167a68063eca3688f9"
+          }
+        },
+        {
+          "client_id": "626247571177-o2bn0mchuihm5pf37k47kogckb2od0pb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6AVHn6S1qN0L2-YZINVx-bCkmR35FF5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626247571177-o2bn0mchuihm5pf37k47kogckb2od0pb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
