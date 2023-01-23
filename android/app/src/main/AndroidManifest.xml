@@ -1,6 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.metiz_cinema">
-   <application
+
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
+    <application
         android:label="metiz_cinema"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -30,5 +35,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+
+
     </application>
 </manifest>

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/screen/LOGIN/login_metiz.dart';
 import 'package:metiz_cinema/screen/LOGIN/register.dart';
@@ -91,13 +92,20 @@ class _LoginState extends State<Login> {
                         height: 50,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),
-                        child: Text(
+                        child:  ElevatedButton(onPressed: (){
+                          _facebookLogin();
+
+                          setState(() {
+
+                          });
+                        }, child: Text(
                           "TÀI KHOẢN FACEBOOK",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: Color.fromRGBO(255, 255, 255, 1),
                           ),
+                        ),
                         ),
                       ),
                     ],
@@ -146,5 +154,43 @@ class _LoginState extends State<Login> {
       ),
       ),
     );
+  }
+  _facebookLogin() async {
+    // Create an instance of FacebookLogin
+    final fb = FacebookLogin();
+
+// Log in
+    final res = await fb.logIn(permissions: [
+      FacebookPermission.publicProfile, //permission to get public profile
+      FacebookPermission.email, // permission to get email address
+    ]);
+    // Check result status
+    switch (res.status) {
+      case FacebookLoginStatus.success:
+      // Logged in
+
+      // Send access token to server for validation and auth
+        final FacebookAccessToken? accessToken = res.accessToken; // get accessToken for auth login
+        final profile = await fb.getUserProfile(); // get frofile user
+        final imageUrl = await fb.getProfileImageUrl(width: 100);
+        final email = await fb.getUserEmail();
+
+        print('Access token: ${accessToken?.token}');
+        print('Hello, ${profile!.name}! You ID: ${profile.userId}');
+        print('Your profile image: $imageUrl');
+
+        // But user can decline permission
+        if (email != null)
+          print('And your email is $email');
+
+        break;
+      case FacebookLoginStatus.cancel:
+      // User cancel log in
+        break;
+      case FacebookLoginStatus.error:
+      // Log in failed
+        print('Error while log in: ${res.error}');
+        break;
+    }
   }
 }
