@@ -51,13 +51,63 @@ class _AppBarHomeState extends State<AppBarHome> {
         )
       ),
       body: Container(
-        height: 450,
-        color: Colors.white,
-        child: TabBarView(children: [
-          nowShow(),
-          commingSoon()
-        ]),
+        child: Column(
+          children: [
+            Container(
+              height: 450,
+              color: Colors.white,
+              child: TabBarView(children: [
+                nowShow(),
+                commingSoon()
+              ]),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15, right: 15),
+              height: 40,
+              color: Color.fromRGBO(148, 79, 234, 1),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("TIN TỨC & KHUYẾN MÃI", style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                      ),
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        // height: 25,
+                        // width: 50,
+                        child: InkWell(
+                          child: Text(
+                            "Tất cả", style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold
+                          ),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.grey,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
+
 
       drawer: Drawer(
         child: Column(

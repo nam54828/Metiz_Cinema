@@ -4,8 +4,6 @@ import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/screen/LOGIN/login_metiz.dart';
 import 'package:metiz_cinema/screen/LOGIN/register.dart';
 import 'package:metiz_cinema/screen/about.dart';
-import 'package:metiz_cinema/screen/LOGIN/login_fb.dart';
-
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -83,10 +81,7 @@ class _LoginState extends State<Login> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       MaterialButton(
-                        onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Login_FB())),
+                        onPressed: () {},
                         color: Colors.blue,
                         minWidth: 330,
                         height: 50,

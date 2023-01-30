@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/screen/LOGIN/login.dart';
@@ -134,7 +135,15 @@ class _Login_MetizState extends State<Login_Metiz> {
                 children: [
                   Container(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text,
+                            password: passwordController.text)
+                            .then((value){
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => AppBarHome()));
+                        }).onError((error, stackTrace) {
+                          showFaileMessage();
+                        });
+                      },
                       style:
                       ElevatedButton.styleFrom(primary: Colors.orangeAccent),
                       child: SizedBox(
