@@ -14,6 +14,16 @@ class _IntroduceState extends State<Introduce> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(14, 29, 47, 1),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        leading: IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AppBarHome())), icon: Icon(Icons.arrow_back)),
+        title: Text("GIỚI THIỆU", style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 14
+        ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -23,33 +33,6 @@ class _IntroduceState extends State<Introduce> {
                   color: Colors.black,
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 20, left: 20),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => About()));
-                              },
-                              icon: Icon(Icons.arrow_back),
-                              color: Color.fromRGBO(221, 221, 221, 1),
-                            ),
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(255, 255, 255, 0.03),
-                                borderRadius: BorderRadius.circular(50)),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 90, top: 20),
-                            child: Text(
-                              "GIỚI THIỆU",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(230, 230, 230, 1)),
-                            ),
-                          ),
-                        ],
-                      ),
                       Container(
                         child: Column(
                           children: [
@@ -81,7 +64,7 @@ class _IntroduceState extends State<Introduce> {
               children: [
                 Center(
                   child: Container(
-                    margin: EdgeInsets.only(top: 350),
+                    margin: EdgeInsets.only(top: 300),
                     child: Text(
                       '"Metiz Cinema, cụm rạp 5\n phòng chiếu lần đầu tiên\n xuất hiện tại Đà Nẵng, đem\n đến cho bạn những trải\n nghiệm điện ảnh tươi mới\n tuyệt hảo với mức giá ưu\n đãi nhất." ',
                       style: TextStyle(
