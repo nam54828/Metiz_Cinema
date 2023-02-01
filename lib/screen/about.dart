@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:metiz_cinema/components/about_introduce.dart';
+import 'package:metiz_cinema/screen/Content_about/about_introduce.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
+import 'package:metiz_cinema/screen/Content_about/about_security.dart';
+import 'package:metiz_cinema/screen/Content_about/about_setting.dart';
 
 class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
@@ -109,7 +111,7 @@ class _AboutState extends State<About> {
                     Container(
                       margin: EdgeInsets.only(left: 120, top: 23),
                       child: IconButton(
-                        onPressed: (){},
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder:(context) => aboutSetting())),
                         icon: Icon(Icons.chevron_right, color: Colors.white,),
                       ),
                     ),
@@ -150,7 +152,7 @@ class _AboutState extends State<About> {
                     Container(
                       margin: EdgeInsets.only(left: 148, top: 23),
                       child: IconButton(
-                        onPressed: (){},
+                        onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => security())),
                         icon: Icon(Icons.chevron_right, color: Colors.white,),
                       ),
                     ),

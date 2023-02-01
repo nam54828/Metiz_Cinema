@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/screen/about.dart';
 
 class Introduce extends StatefulWidget {
@@ -17,7 +16,7 @@ class _IntroduceState extends State<Introduce> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        leading: IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AppBarHome())), icon: Icon(Icons.arrow_back)),
+        leading: IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => About())), icon: Icon(Icons.arrow_back)),
         title: Text("GIỚI THIỆU", style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 14
