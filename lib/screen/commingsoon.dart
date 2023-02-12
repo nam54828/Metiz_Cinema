@@ -1,5 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:metiz_cinema/models/post.dart';
+import 'package:metiz_cinema/services/movies.dart';
+
 class commingSoon extends StatefulWidget {
   const commingSoon({Key? key}) : super(key: key);
 
@@ -8,14 +12,28 @@ class commingSoon extends StatefulWidget {
 }
 
 class _commingSoonState extends State<commingSoon> {
-  final urlImages = [
-    'https://metiz.vn/media/poster_film/tu_tu_hoi_sinh_poster_1_.jpg',
-    'https://metiz.vn/media/poster_film/puss_in_boots_30.12.22_700x1000px.png',
-    'https://metiz.vn/media/poster_film/406x600-ddd-final_1_.jpg',
-    'https://metiz.vn/media/poster_film/470wx700h-real-ghost.jpg',
-  ];
+  List<Post> postData = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    movieAPI.fetchPost().then((dataFromServer) {
+      setState(() {
+        postData = dataFromServer;
+      });
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    final urlImages = [
+      'https://metiz.vn/media/poster_film/tu_tu_hoi_sinh_poster_1_.jpg',
+      'https://metiz.vn/media/poster_film/puss_in_boots_30.12.22_700x1000px.png',
+      'https://metiz.vn/media/poster_film/406x600-ddd-final_1_.jpg',
+      'https://metiz.vn/media/poster_film/470wx700h-real-ghost.jpg',
+    ];
     return Scaffold(
       backgroundColor: Color.fromRGBO(14, 29, 47, 1),
       body: SingleChildScrollView(
@@ -39,7 +57,7 @@ class _commingSoonState extends State<commingSoon> {
               Container(
                 child: Text(
                   "Example", style: TextStyle(
-                  color: Colors.white
+                    color: Colors.white
                 ),
                 ),
               ),
@@ -50,7 +68,7 @@ class _commingSoonState extends State<commingSoon> {
                 child: Text(
                   "Thời lượng""Khởi chiếu",
                   style: TextStyle(
-                    color: Colors.white
+                      color: Colors.white
                   ),
                 ),
               )
@@ -72,5 +90,3 @@ Widget buildImage(String urlImage, int index) {
     ),
   );
 }
-
-

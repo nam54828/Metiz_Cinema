@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:metiz_cinema/screen/Content_about/about_introduce.dart';
 import 'package:metiz_cinema/screen/Content_about/about_setting.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
-import 'package:metiz_cinema/components/staggeredGridViewScreen.dart';
 import 'package:metiz_cinema/screen/Carousel/sliderCarousel.dart';
 import 'package:metiz_cinema/screen/about.dart';
 import 'package:metiz_cinema/screen/LOGIN/login.dart';
+import 'package:metiz_cinema/screen/profile/information.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
