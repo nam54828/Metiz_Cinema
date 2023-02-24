@@ -7,6 +7,7 @@ import 'package:metiz_cinema/screen/Carousel/sliderCarousel.dart';
 import 'package:metiz_cinema/screen/about.dart';
 import 'package:metiz_cinema/screen/LOGIN/login.dart';
 import 'package:metiz_cinema/screen/profile/information.dart';
+import 'package:metiz_cinema/screen/templates/templateMovie.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

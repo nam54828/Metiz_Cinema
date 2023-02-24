@@ -13,6 +13,7 @@ class Post {
   String? phong;
   String? id;
 
+
   Post({this.tenPhim, this.thoiLuong, this.khoiChieu, this.image, this.dienVien, this.daoDien, this.theLoai, this.kiemDuyet, this.ngonNgu, this.trailer, this.textTrailer, this.phong, this.id
   });
 

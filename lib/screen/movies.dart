@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/models/post.dart';
 import 'package:metiz_cinema/services/movies.dart';
@@ -12,7 +15,6 @@ class Movies extends StatefulWidget {
 
 class _MoviesState extends State<Movies> {
   List<Post> postData = [];
-
   @override
   void initState() {
     // TODO: implement initState
@@ -66,6 +68,8 @@ class _MoviesState extends State<Movies> {
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
+                              
+
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -88,7 +92,7 @@ class _MoviesState extends State<Movies> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
-                                fontWeight: FontWeight.bold
+                                fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.left,
                           ),

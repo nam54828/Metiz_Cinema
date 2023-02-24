@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:metiz_cinema/models/postNews.dart';
 import 'package:metiz_cinema/screen/about.dart';
 import 'package:metiz_cinema/screen/blog.dart';
 import 'package:metiz_cinema/screen/commingsoon.dart';
@@ -13,6 +14,7 @@ import 'package:metiz_cinema/screen/nowshow.dart';
 import 'package:metiz_cinema/screen/profile/information.dart';
 import 'package:metiz_cinema/screen/profile/profile.dart';
 import 'package:metiz_cinema/screen/showtimes.dart';
+import 'package:metiz_cinema/services/news.dart';
 
 class AppBarHome extends StatefulWidget {
   const AppBarHome({Key? key}) : super(key: key);
@@ -34,6 +36,18 @@ final user = currentUser.currentUser;
 
 
 class _AppBarHomeState extends State<AppBarHome> {
+  List<postNews> postDataNews = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    newAPI.fetchPost().then((dataFromServer) {
+      setState(() {
+        postDataNews = dataFromServer;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) => DefaultTabController(
         length: 2,
