@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:metiz_cinema/models/postNews.dart';
+import 'package:metiz_cinema/newAppBar.dart';
 import 'package:metiz_cinema/screen/about.dart';
 import 'package:metiz_cinema/screen/blog.dart';
 import 'package:metiz_cinema/screen/commingsoon.dart';
@@ -86,7 +87,7 @@ class _AppBarHomeState extends State<AppBarHome> {
                        ),
                      ),
                      Container(
-                       height: 450,
+                       height: 430,
                        color: Colors.white,
                        child: TabBarView(children: [nowShow(), commingSoon()]),
                      ),
@@ -113,62 +114,52 @@ class _AppBarHomeState extends State<AppBarHome> {
                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                              crossAxisAlignment: CrossAxisAlignment.center,
                              children: [
-                               Container(
-                                 child: InkWell(
-                                   child: Text("Tất cả",
-                                       style: TextStyle(
-                                           color: Colors.white,
-                                           fontWeight: FontWeight.bold)),
+                               InkWell(
+                                 child: Container(
+                                   width: 70,
+                                   child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.center,
+                                     children: [
+                                       Column(
+                                         children: [
+                                           Text(
+                                             "Tất cả",
+                                             style: TextStyle(
+                                               fontWeight: FontWeight.bold,
+                                               fontSize: 13,
+                                               color: Colors.white
+                                             ),
+                                           )
+                                         ],
+                                       ),
+                                       Column(
+                                         children: [
+                                           Icon(Icons.arrow_right_alt, size: 15, color:  Colors.white,)
+                                         ],
+                                       )
+                                     ],
+                                   ),
+                                   decoration: BoxDecoration(
+                                     color: Colors.black26,
+                                     borderRadius: BorderRadius.circular(36)
+                                   ),
                                  ),
-                                 decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(30),
-                                   color: Colors.grey,
-                                 ),
+                                 onTap: (){
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => News()));
+                                 },
                                )
                              ],
                            ),
                          ],
                        ),
                      ),
-                     Container(
-                       child: Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child: StaggeredGrid.count(
-                           crossAxisCount: 4,
-                           mainAxisSpacing: 4,
-                           crossAxisSpacing: 4,
-                           children: [
-                             StaggeredGridTile.count(crossAxisCellCount: 2,
-                                 mainAxisCellCount: 2,
-                                 child: Image.asset('images/about_introduce.jpg',fit: BoxFit.cover)
-                             ),
-                             StaggeredGridTile.count(crossAxisCellCount: 2,
-                                 mainAxisCellCount: 2,
-                                 child: Image.asset('images/about_introduce.jpg', fit: BoxFit.cover,)
-                             ),
-                             StaggeredGridTile.count(crossAxisCellCount: 4,
-                                 mainAxisCellCount: 2,
-                                 child: Image.asset('images/about_introduce.jpg', fit: BoxFit.cover,)
-                             ),
-                             StaggeredGridTile.count(crossAxisCellCount: 2,
-                                 mainAxisCellCount: 2,
-                                 child: Image.asset('images/about_introduce.jpg', fit: BoxFit.cover,)
-                             ),
-                             StaggeredGridTile.count(crossAxisCellCount: 2,
-                                 mainAxisCellCount: 2,
-                                 child: Image.asset('images/about_introduce.jpg',fit: BoxFit.cover,)
-                             ),
-                             StaggeredGridTile.count(crossAxisCellCount: 4,
-                                 mainAxisCellCount: 2,
-                                 child: Image.asset('images/about_introduce.jpg', fit: BoxFit.cover,)
-                             ),
-                           ],
-                         ),
-                       ),
-                     ),
+                    Container(
+                      height: 670,
+                      child: newAppBar(),
+                    )
                    ],
                  ),
-               )
+               ),
               ],
             ),
           ),
@@ -273,6 +264,9 @@ class _AppBarHomeState extends State<AppBarHome> {
                           .instance // lấy dữ liệu người dùng đã đăng nhập
                           .signOut()
                           .then((value) {
+                            setState(() {
+                              currentUser;
+                            });
                         Navigator.push(
                             context,
                             MaterialPageRoute(

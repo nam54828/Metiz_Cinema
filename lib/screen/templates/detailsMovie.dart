@@ -10,8 +10,6 @@ class detailsMovie extends StatelessWidget {
 
   const detailsMovie({super.key,required this.postData});
 
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(14, 29, 47, 1),

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
-import 'package:metiz_cinema/models/user_model.dart';
 import 'package:metiz_cinema/screen/profile/profile.dart';
 
 class information extends StatefulWidget {
@@ -27,36 +26,7 @@ class _informationState extends State<information> {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 
-  Future<void> _update([DocumentSnapshot? documentSnapshot]) async{
-    if (documentSnapshot != null) {
-      fullnameController.text = documentSnapshot[''];
-      birthdayController.text = documentSnapshot[''];
-      emailController.text = documentSnapshot[''];
-      cmndController.text = documentSnapshot[''];
-      phoneController.text = documentSnapshot[''];
-      passwordController.text = documentSnapshot[''];
-      confirmPasswordController.text = documentSnapshot[''];
-      cityController.text = documentSnapshot[''];
-      districtController.text = documentSnapshot[''];
-      addressController.text = documentSnapshot[''];
-    }
-    await showModalBottomSheet(context: context,
-        builder: (BuildContext context){
-      return Padding(
-          padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-        // child: Column(
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   mainAxisSize: MainAxisSize.min,
-        //   children: [
-        //     TextField(
-        //       controller: fullnameController,
-        //       decoration: InputDecoration(hintText: 'Name'),
-        //     )
-        //   ],
-        // ),
-      );
-        });
-  }
+
 
   @override
   Widget build(BuildContext context) {

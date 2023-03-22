@@ -14,7 +14,7 @@ class Post {
   String? id;
 
 
-  Post({this.tenPhim, this.thoiLuong, this.khoiChieu, this.image, this.dienVien, this.daoDien, this.theLoai, this.kiemDuyet, this.ngonNgu, this.trailer, this.textTrailer, this.phong, this.id
+  Post({required this.tenPhim, this.thoiLuong, this.khoiChieu, this.image, this.dienVien, this.daoDien, this.theLoai, this.kiemDuyet, this.ngonNgu, this.trailer, this.textTrailer, this.phong, this.id
   });
 
   Post.fromJson(Map<String, dynamic> json){

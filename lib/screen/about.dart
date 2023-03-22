@@ -12,13 +12,6 @@ class About extends StatefulWidget {
 }
 
 class _AboutState extends State<About> {
-  List<about> abouts = [
-    about('Giới thiệu','https://cdn-icons-png.flaticon.com/512/5968/5968517.png'),
-    about('Chính sách & điều khoản','https://www.iconpacks.net/icons/1/free-settings-icon-778-thumb.png'),
-    about('Chính sách bảo mật','https://cdn-icons-png.flaticon.com/512/929/929410.png'),
-    about('Câu hỏi thường gặp','https://cdn-icons-png.flaticon.com/512/46/46246.png'),
-    about('Liên hệ','https://freeiconshop.com/wp-content/uploads/edd/phone-flat.png'),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -232,10 +225,38 @@ class _AboutState extends State<About> {
                     Container(
                       margin: EdgeInsets.only(left: 220, top: 23),
                       child: IconButton(
-                       onPressed: (){},
+                       onPressed: (){
+
+                       },
                         icon: Icon(Icons.chevron_right, color: Colors.white,),
                       ),
                     ),
+                    // Visibility(
+                    //     visible: isVisible,
+                    //     child: Container(
+                    //   child: Column(
+                    //     children: [
+                    //       Row(
+                    //         children: [
+                    //           Text("DỊCH VỤ KHÁCH HÀNG", style: TextStyle(
+                    //             color: Colors.white,
+                    //             fontWeight: FontWeight.bold
+                    //           ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       Row(
+                    //         children: [
+                    //           Text("DỊCH VỤ KHÁCH HÀNG", style: TextStyle(
+                    //               color: Colors.white,
+                    //               fontWeight: FontWeight.bold
+                    //           ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ))
                   ],
                 ),
               ),
@@ -247,8 +268,4 @@ class _AboutState extends State<About> {
   }
 }
 
-class about {
-  String name;
-  String leadicon;
-  about(this.name, this.leadicon);
-}
+
