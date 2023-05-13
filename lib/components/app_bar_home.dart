@@ -20,6 +20,7 @@ import 'package:metiz_cinema/services/news.dart';
 class AppBarHome extends StatefulWidget {
   const AppBarHome({Key? key}) : super(key: key);
 
+
   @override
   State<AppBarHome> createState() => _AppBarHomeState();
 }
@@ -33,22 +34,25 @@ TabBar get _tabBar => TabBar(
       ],
     );
 final currentUser = FirebaseAuth.instance;
-final user = currentUser.currentUser;
+User? user;
 
 
 class _AppBarHomeState extends State<AppBarHome> {
   List<postNews> postDataNews = [];
 
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    user = currentUser.currentUser; // kiểm tra nếu người dùng đang đăng nhập hoặc null
     newAPI.fetchPost().then((dataFromServer) {
       setState(() {
         postDataNews = dataFromServer;
       });
     });
   }
+
   @override
   Widget build(BuildContext context) => DefaultTabController(
         length: 2,
@@ -287,13 +291,13 @@ class _AppBarHomeState extends State<AppBarHome> {
 }
 
 Widget headerWidget(context) {
-  const url =
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEKWsrQjrLklNeCqRe4FXVCTLKzyQaXWqwWUDyFvq8e1YXaPFu-thyqOzkiwXLshME9H0&usqp=CAU';
   return Row(
     children: [
-      const CircleAvatar(
+      CircleAvatar(
         radius: 30,
-        backgroundImage: NetworkImage(url),
+        backgroundImage: currentUser.currentUser?.photoURL != null
+            ? NetworkImage(currentUser.currentUser!.photoURL!)
+            : NetworkImage("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png"),
       ),
       const SizedBox(
         width: 20,

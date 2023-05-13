@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:metiz_cinema/components/app_bar_home.dart';
+
 import 'package:metiz_cinema/constants/constants.dart';
 import 'package:metiz_cinema/models/post.dart';
-import 'package:metiz_cinema/screen/Ticket/datVe.dart';
-import 'package:metiz_cinema/services/movies.dart';
-
-import '../templates/templateMovie.dart';
 
 class SeatBookingPage extends StatefulWidget {
+final Post postData;
+  const SeatBookingPage({Key? key, required this.postData}) : super(key: key);
+
   @override
   _SeatBookingPageState createState() => _SeatBookingPageState();
 }
@@ -56,7 +55,7 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
             child: Stack(
               children: [
                 Container(
-                  child: Image.network("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" , height: 150, fit: BoxFit.fitWidth, width: MediaQuery.of(context).size.width * 1,),
+                  child: Image.network("${widget.postData.image}" , height: 150, fit: BoxFit.fitWidth, width: MediaQuery.of(context).size.width * 1,),
                 ),
                 Container(
                   child: Row(
@@ -66,10 +65,7 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                         children: [
                           IconButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => datVe()));
+                                Navigator.pop(context);
                               },
                               icon: Icon(
                                 Icons.arrow_back,
@@ -85,7 +81,7 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                   padding: EdgeInsets.only(top: 110, left: 20),
                   child: Column(
                     children: [
-                      Text("Tên phim + Tên phòng", style: TextStyle(
+                      Text("${widget.postData.tenPhim} | ${widget.postData.phong}", style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.white
@@ -155,8 +151,8 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                     Column(
                       children: [
                         Text(
-                          'Số ghế đã chọn:',
-                          style: TextStyle(fontSize: 20.0),
+                          'Hàng ghế đã chọn:',
+                          style: TextStyle(fontSize: 16.0),
                         ),
                       ],
                     ),
@@ -190,7 +186,7 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                       children: [
                         Text(
                           'Số ghế đã chọn:',
-                          style: TextStyle(fontSize: 20.0),
+                          style: TextStyle(fontSize: 16.0),
                         ),
                       ],
                     ),
@@ -198,7 +194,7 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                       children: [
                         Text(
                           '${countSelectedSeats()}',
-                          style: TextStyle(fontSize: 20.0, color: Colors.orange),
+                          style: TextStyle(fontSize: 16.0, color: Colors.orange),
                         ),
                       ],
                     )
@@ -211,7 +207,7 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                       children: [
                         Text(
                           'Tổng số tiền:',
-                          style: TextStyle(fontSize: 20.0),
+                          style: TextStyle(fontSize: 16.0),
                         ),
                       ],
                     ),
@@ -219,7 +215,7 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                       children: [
                         Text(
                           '${totalPrice} VNĐ',
-                          style: TextStyle(fontSize: 20.0, color: Colors.orange),
+                          style: TextStyle(fontSize: 16.0, color: Colors.orange),
                         ),
                       ],
                     )
@@ -245,7 +241,7 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                   showDialog(
                     context: context,
                     builder: (_) => AlertDialog(
-                      title: Text("Booking Confirmed"),
+                      title: Text("ĐẶT VÉ"),
                       content: Text("Your booking has been confirmed."),
                       actions: [
                         TextButton(

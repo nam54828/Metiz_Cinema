@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metiz_cinema/Map/location.dart';
 import 'package:metiz_cinema/screen/Content_about/about_introduce.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/screen/Content_about/about_security.dart';
@@ -226,7 +227,7 @@ class _AboutState extends State<About> {
                       margin: EdgeInsets.only(left: 220, top: 23),
                       child: IconButton(
                        onPressed: (){
-
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => MapMultiMarker()));
                        },
                         icon: Icon(Icons.chevron_right, color: Colors.white,),
                       ),

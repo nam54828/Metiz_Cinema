@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
+import 'package:metiz_cinema/screen/LOGIN/forgotPassword.dart';
 import 'package:metiz_cinema/screen/LOGIN/login.dart';
 import 'package:metiz_cinema/screen/LOGIN/register.dart';
 
@@ -205,6 +206,9 @@ class _Login_MetizState extends State<Login_Metiz> {
                             fontSize: 13,
                           fontWeight: FontWeight.bold
                         ),),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => forgotPassword()));
+                        },
                       )
                     ],
                   ),

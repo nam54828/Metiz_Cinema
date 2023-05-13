@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:metiz_cinema/constants/constants.dart';
 import 'package:metiz_cinema/screen/Ticket/chonGhe.dart';
 import 'package:metiz_cinema/screen/commingsoon.dart';
+import 'package:metiz_cinema/services/movies.dart';
+
+import '../models/post.dart';
 
 class TimeSelector extends StatefulWidget {
+  final Post postData;
+  const TimeSelector({Key? key, required this.postData}) : super(key: key);
+  
   @override
   _TimeSelectorState createState() => _TimeSelectorState();
 }
@@ -16,6 +22,7 @@ class _TimeSelectorState extends State<TimeSelector> {
     ["06:30", 02],
     ["10:30", 03]
   ];
+
 
   Widget _timeItem(time, phong, bool active) {
     return Container(
@@ -73,14 +80,59 @@ class _TimeSelectorState extends State<TimeSelector> {
                   setState(() {
                     timeIntexSelected = index;
                   });
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SeatBookingPage()));
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Metiz Cinema", style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold
+                        ),
+                        textAlign: TextAlign.center,),
+                        content: Text("Tôi xác nhận mua vé cho người xem từ 18 Tuổi trở lên và hiểu rằng Metiz sẽ không hoàn tiền nếu không chứng thực được độ tuổi của khán giả.Tham khảo quy định của Bộ Văn Hóa, Thể Thao và Du lịch.",
+                        textAlign: TextAlign.center,),
+                        actions: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FlatButton(
+                              child: Text("Hủy",style: TextStyle(
+                                  color: Colors.blue
+                              )),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text("Đồng ý",style: TextStyle(
+                                  color: Colors.blue
+                              )),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SeatBookingPage(postData: widget.postData),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        )
+                        ],
+                      );
+                    },
+                  );
                 },
                 child: _timeItem(
-                    time[index][0],
-                    time[index][1],
-                    index == timeIntexSelected ? true : false),
+                  time[index][0],
+                  time[index][1],
+                  index == timeIntexSelected ? true : false,
+                ),
               ),
             );
+
           },
         ),
       ),

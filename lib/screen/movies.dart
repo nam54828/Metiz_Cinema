@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/models/post.dart';
+import 'package:metiz_cinema/screen/Ticket/datVe.dart';
 import 'package:metiz_cinema/services/movies.dart';
 
 class Movies extends StatefulWidget {
@@ -135,7 +136,9 @@ class _MoviesState extends State<Movies> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 10),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => datVe(postData: postData[index])));
+                                  },
                                 ),
                               ),
                             ),

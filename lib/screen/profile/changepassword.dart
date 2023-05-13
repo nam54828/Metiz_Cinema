@@ -11,6 +11,7 @@ class changePassword extends StatefulWidget {
 }
 class _changePasswordState extends State<changePassword> {
   final currentUser = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

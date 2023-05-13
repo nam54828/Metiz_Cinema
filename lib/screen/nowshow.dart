@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:get/get.dart';
 import 'package:metiz_cinema/models/post.dart';
 import 'package:metiz_cinema/screen/templates/templateMovie.dart';
 import 'package:metiz_cinema/services/movies.dart';
@@ -61,7 +62,11 @@ class _nowShowState extends State<nowShow> {
                       ],
                     ),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => templateMovie() ));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  templateMovie.create(postData: postData[index])));
                     },
                   );
                 },

@@ -1,8 +1,16 @@
+
+import 'dart:io';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/screen/profile/profile.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
+
 
 class information extends StatefulWidget {
   const information({Key? key}) : super(key: key);
@@ -26,7 +34,36 @@ class _informationState extends State<information> {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 
+   PickedFile? _imageFile = null;
+  final ImagePicker _picker = ImagePicker();
 
+  Future<void> _uploadImage() async {
+    firebase_storage.Reference storageReference =
+    firebase_storage.FirebaseStorage.instance.ref().child('avatar/${auth.currentUser!.uid}');
+    firebase_storage.UploadTask uploadTask =
+    storageReference.putFile(File(_imageFile!.path));
+    await uploadTask;
+    print('File ${_imageFile!.path} uploaded successfully.');
+
+    String downloadURL =
+    await storageReference.getDownloadURL();
+    await auth.currentUser!.updatePhotoURL(downloadURL);
+  }
+  Future<void> _updateUser() async {
+    // get the user document ID
+    String uid = auth.currentUser!.uid;
+    // update the user information in Firestore
+    await firestore.collection('user').doc(uid).update({
+      // retrieve the text form fields values and update the corresponding Firestore fields
+      'fullname': fullnameController.text.trim(),
+      'birthday': birthdayController.text.trim(),
+      'email': emailController.text.trim(),
+      'cmnd': cmndController.text.trim(),
+      'phone': phoneController.text.trim(),
+      'city': cityController.text.trim(),
+      'address': addressController.text.trim(),
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +90,7 @@ class _informationState extends State<information> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          padding: EdgeInsets.only(top:20, bottom: 20),
-                          child: Image.network("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png", height: 80, width: 80,),
-                        ),
+                        imageProfile()
                       ],
                     ),
                     Row(
@@ -116,30 +150,162 @@ class _informationState extends State<information> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                                hintText: "Họ & Tên *",
-                                hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10
-                                )
-                            ),
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                            controller: fullnameController,
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return ("Vui lòng nhập họ và tên");
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("user")
+                                .where("uid",
+                                isEqualTo: currentUser.currentUser!.uid)
+                                .snapshots(),
+                            builder:
+                                (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, i) {
+                                    var data = snapshot.data!.docs[i];
+                                    return TextField(
+                                      controller: TextEditingController()
+                                      ..text = data["fullname"],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: "Họ & Tên *",
+                                      hintStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10
+                                      )
+                                  ),
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),
+                                  controller: fullnameController,
+                                  validator: (value){
+                                    if(value!.isEmpty){
+                                      return ("Vui lòng nhập họ và tên");
+                                    }
+                                  },
+                                  onSaved: (value){
+                                    fullnameController.text = value!;
+                                  },
+                                );
                               }
                             },
-                            onSaved: (value){
-                              fullnameController.text = value!;
+                          ),
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("user")
+                                .where("uid",
+                                isEqualTo: currentUser.currentUser!.uid)
+                                .snapshots(),
+                            builder:
+                                (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, i) {
+                                    var data = snapshot.data!.docs[i];
+                                    return TextField(
+                                      controller: TextEditingController()
+                                        ..text = data["birthday"],
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: "Ngày Sinh *",
+                                      hintStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10
+                                      )
+                                  ),
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),
+                                  controller: birthdayController,
+                                  validator: (value){
+                                    if(value!.isEmpty){
+                                      return ("Vui lòng nhập ngày sinh");
+                                    }
+                                  },
+                                  onSaved: (value){
+                                    birthdayController.text = value!;
+                                  },
+                                );
+                              }
+                            },
+                          ),
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("user")
+                                .where("uid",
+                                isEqualTo: currentUser.currentUser!.uid)
+                                .snapshots(),
+                            builder:
+                                (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, i) {
+                                    var data = snapshot.data!.docs[i];
+                                    return TextField(
+                                      controller: TextEditingController()
+                                        ..text = data["email"],
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: "Email *",
+                                      hintStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10
+                                      )
+                                  ),
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),
+                                  controller: emailController,
+                                  validator: (value){
+                                    if(value!.isEmpty){
+                                      return ("Vui lòng nhập email");
+                                    }
+                                    if (!RegExp(
+                                        "^[a-zA-Z0-9+_.-]+@[a-z0-9A-Z.-]+.[a-z]")
+                                        .hasMatch(value)) {
+                                      return ("Vui lòng nhập Email hợp lệ");
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value){
+                                    emailController.text = value!;
+                                  },
+                                );
+                              }
                             },
                           ),
                           TextFormField(
                             decoration: InputDecoration(
-                                hintText: "Ngày Sinh *",
+                                hintText: "CMND *",
                                 hintStyle: TextStyle(
                                     color: Colors.white,
                                     fontSize: 10
@@ -148,106 +314,107 @@ class _informationState extends State<information> {
                             style: TextStyle(
                                 color: Colors.white
                             ),
-                            controller: birthdayController,
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return ("Vui lòng nhập ngày sinh");
-                              }
-                            },
-                            onSaved: (value){
-                              birthdayController.text = value!;
-                            },
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                hintText: "Email *",
-                                hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10
-                                )
-                            ),
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                            controller: emailController,
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return ("Vui lòng nhập email");
-                              }
-                              if (!RegExp(
-                                  "^[a-zA-Z0-9+_.-]+@[a-z0-9A-Z.-]+.[a-z]")
-                                  .hasMatch(value)) {
-                                return ("Vui lòng nhập Email hợp lệ");
-                              }
-                              return null;
-                            },
-                            onSaved: (value){
-                              emailController.text = value!;
-                            },
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                hintText: "Số CMND",
-                                hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10
-                                )
-                            ),
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                hintText: "Số Điện Thoại *",
-                                hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10
-                                )
-                            ),
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                            controller: phoneController,
+                            controller: cmndController,
                             validator: (value){
                               if (value!.isEmpty){
-                                return ("Vui lòng nhập số điện thoại");
+                                return ("Vui lòng nhập số chứng minh nhân dân");
                               }
                             },
                             onSaved: (value){
-                              phoneController.text = value!;
+                              cmndController.text = value!;
                             },
                           ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                hintText: "Chọn Thành Phố",
-                                hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10
-                                )
-                            ),
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                            controller: cityController,
-                            onSaved: (value){
-                              cityController.text = value!;
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("user")
+                                .where("uid",
+                                isEqualTo: currentUser.currentUser!.uid)
+                                .snapshots(),
+                            builder:
+                                (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, i) {
+                                    var data = snapshot.data!.docs[i];
+                                    return TextField(
+                                      controller: TextEditingController()
+                                        ..text = data["phone"],
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return  TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: "Số Điện Thoại *",
+                                      hintStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10
+                                      )
+                                  ),
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),
+                                  controller: phoneController,
+                                  validator: (value){
+                                    if (value!.isEmpty){
+                                      return ("Vui lòng nhập số điện thoại");
+                                    }
+                                  },
+                                  onSaved: (value){
+                                    phoneController.text = value!;
+                                  },
+                                );
+                              }
                             },
                           ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                hintText: "Chọn Quận/Huyện",
-                                hintStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10
-                                )
-                            ),
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                            controller: districtController,
-                            onSaved: (value){
-                              districtController.text = value!;
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("user")
+                                .where("uid",
+                                isEqualTo: currentUser.currentUser!.uid)
+                                .snapshots(),
+                            builder:
+                                (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, i) {
+                                    var data = snapshot.data!.docs[i];
+                                    return TextField(
+                                      controller: TextEditingController()
+                                        ..text = data["city"],
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: "Chọn Thành Phố",
+                                      hintStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10
+                                      )
+                                  ),
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),
+                                  controller: cityController,
+                                  onSaved: (value){
+                                    cityController.text = value!;
+                                  },
+                                );
+                              }
                             },
                           ),
                           TextFormField(
@@ -294,7 +461,14 @@ class _informationState extends State<information> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         MaterialButton(
-                          onPressed: () {
+                          onPressed: () async{
+                            if(_formKey.currentState!.validate()){
+                              _formKey.currentState!.save();
+                              await _updateUser();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Thông tin của bạn đã được cập nhật"))
+                              );
+                            }
                           },
                           color: Colors.orange,
                           minWidth: 330,
@@ -321,5 +495,85 @@ class _informationState extends State<information> {
         ),
       ),
     );
+  }
+  Widget imageProfile(){
+    return Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Container(
+            padding: EdgeInsets.only(top:20, bottom: 20),
+            child: CircleAvatar(
+              radius: 40,
+              backgroundImage: currentUser.currentUser?.photoURL != null
+                  ? NetworkImage(currentUser.currentUser!.photoURL!)
+                  : NetworkImage("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png"),
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: InkWell(
+              onTap: () {
+                showModalBottomSheet(context: context,
+                  builder: ((builder) => bottomSheet()),
+                );
+              },
+              child: Icon(
+                Icons.camera_alt,
+                color: Colors.teal,
+                size: 28,
+              ),
+            ),
+          )
+        ]
+    );
+  }
+
+  Widget bottomSheet(){
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children: [
+          Text("Choose Profile photo", style: TextStyle(
+            fontSize: 20
+          ),),SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FlatButton.icon(onPressed: (){
+                takePhoto(ImageSource.camera);
+              }
+                  , icon: Icon(Icons.camera),
+                  label: Text("Camera")),
+              FlatButton.icon(onPressed: (){
+                takePhoto(ImageSource.gallery);
+              }
+                  , icon: Icon(Icons.browse_gallery),
+                  label: Text("Gallery")),
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: _uploadImage,
+                child: Text('Upload Image'),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await _picker.getImage(source: source);
+    setState(() {
+      _imageFile = pickedFile!;
+    });
   }
 }

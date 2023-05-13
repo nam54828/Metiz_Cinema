@@ -7,27 +7,15 @@ import 'package:metiz_cinema/screen/templates/templateMovie.dart';
 import 'package:metiz_cinema/services/movies.dart';
 
 class datVe extends StatefulWidget {
-  const datVe({Key? key}) : super(key: key);
+  final Post postData;
+
+  const datVe({Key? key, required this.postData}) : super(key: key);
 
   @override
   State<datVe> createState() => _datVeState();
 }
 
 class _datVeState extends State<datVe> {
-  List<Post> postData = [];
-
-  late int index = postData.length;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    movieAPI.fetchPost().then((dataFromServer) {
-      setState(() {
-        postData = dataFromServer;
-      });
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +29,7 @@ class _datVeState extends State<datVe> {
                 children: [
                   Container(
                     child: Expanded(
-                      child: Image.network('${postData[index].image}', height: 550, width: double.infinity, fit: BoxFit.fill,),
+                      child: Image.network('${widget.postData.image}', height: 550, width: double.infinity, fit: BoxFit.fill,),
                     ),
                   ),
                   Container(
@@ -52,10 +40,7 @@ class _datVeState extends State<datVe> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => templateMovie()));
+                                  Navigator.pop(context);
                                 },
                                 icon: Icon(
                                   Icons.arrow_back,
@@ -86,8 +71,8 @@ class _datVeState extends State<datVe> {
                             Container(
                               padding: EdgeInsets.only(left: 15, top: 400),
                               child: Text(
-                                '${postData[index].tenPhim}'
-                                    ' (${postData[index].phong})',
+                                '${widget.postData.tenPhim}'
+                                    ' (${widget.postData.phong})',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -123,7 +108,7 @@ class _datVeState extends State<datVe> {
                                   Row(
                                     children: [
                                       Text(
-                                        "${postData[index].thoiLuong} Phút",
+                                        "${widget.postData.thoiLuong} Phút",
                                         style: TextStyle(color: Colors.white),
                                       )
                                     ],
@@ -152,7 +137,7 @@ class _datVeState extends State<datVe> {
                                   Row(
                                     children: [
                                       Text(
-                                        "${postData[index].khoiChieu}",
+                                        "${widget.postData.khoiChieu}",
                                         style: TextStyle(color: Colors.white),
                                       )
                                     ],
@@ -213,7 +198,7 @@ class _datVeState extends State<datVe> {
                   child: DateSelector()),
               Container(
 
-                  child: TimeSelector()),
+                  child: TimeSelector(postData: widget.postData,)),
             ],
           ),
         ),

@@ -7,26 +7,20 @@ import 'package:metiz_cinema/screen/movies.dart';
 import 'package:metiz_cinema/services/movies.dart';
 
 class templateMovie extends StatefulWidget {
-  const templateMovie({Key? key}) : super(key: key);
+  final Post postData;
+
+  templateMovie({Key? key, required this.postData}) : super(key: key);
+
+  static const routeName = '/templateMovie';
+
+  static Widget create({required Post postData}) =>
+      templateMovie(postData: postData);
+
   @override
   State<templateMovie> createState() => _templateMovieState();
 }
 
 class _templateMovieState extends State<templateMovie> {
-  List<Post> postData = [];
-
-  late int index = postData.length;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    movieAPI.fetchPost().then((dataFromServer) {
-      setState(() {
-        postData = dataFromServer;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +34,7 @@ class _templateMovieState extends State<templateMovie> {
                 children: [
                   Container(
                     child: Expanded(
-                      child: Image.network('${postData[index].image}'),
+                      child: Image.network('${widget.postData.image}'),
                     ),
                   ),
                   Container(
@@ -85,8 +79,8 @@ class _templateMovieState extends State<templateMovie> {
                             Container(
                               padding: EdgeInsets.only(left: 15, top: 400),
                               child: Text(
-                                '${postData[index].tenPhim}'
-                                ' (${postData[index].phong})',
+                                '${widget.postData.tenPhim}'
+                                ' (${widget.postData.phong})',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -122,7 +116,7 @@ class _templateMovieState extends State<templateMovie> {
                                   Row(
                                     children: [
                                       Text(
-                                        "${postData[index].thoiLuong} Phút",
+                                        "${widget.postData.thoiLuong} Phút",
                                         style: TextStyle(color: Colors.white),
                                       )
                                     ],
@@ -151,7 +145,7 @@ class _templateMovieState extends State<templateMovie> {
                                   Row(
                                     children: [
                                       Text(
-                                        "${postData[index].khoiChieu}",
+                                        "${widget.postData.khoiChieu}",
                                         style: TextStyle(color: Colors.white),
                                       )
                                     ],
@@ -215,7 +209,14 @@ class _templateMovieState extends State<templateMovie> {
                         children: [
                           MaterialButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => datVe()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => datVe(
+                                    postData: widget.postData,
+                                  ),
+                                ),
+                              );
                             },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30)),
@@ -263,7 +264,7 @@ class _templateMovieState extends State<templateMovie> {
                               child: Column(
                                 children: [
                                   Text(
-                                    "${postData[index].dienVien}",
+                                    "${widget.postData.dienVien}",
                                     style: TextStyle(color: Colors.grey),
                                     textAlign: TextAlign.justify,
                                     overflow: TextOverflow.clip,
@@ -292,7 +293,7 @@ class _templateMovieState extends State<templateMovie> {
                             child: Column(
                               children: [
                                 Text(
-                                  "${postData[index].daoDien}",
+                                  "${widget.postData.daoDien}",
                                   style: TextStyle(color: Colors.grey),
                                 )
                               ],
@@ -318,7 +319,7 @@ class _templateMovieState extends State<templateMovie> {
                             child: Column(
                               children: [
                                 Text(
-                                  "${postData[index].theLoai}",
+                                  "${widget.postData.theLoai}",
                                   style: TextStyle(color: Colors.grey),
                                 )
                               ],
@@ -346,7 +347,7 @@ class _templateMovieState extends State<templateMovie> {
                               child: Column(
                                 children: [
                                   Text(
-                                    "${postData[index].kiemDuyet}",
+                                    "${widget.postData.kiemDuyet}",
                                     style: TextStyle(color: Colors.grey),
                                     textAlign: TextAlign.justify,
                                     overflow: TextOverflow.clip,
@@ -377,7 +378,7 @@ class _templateMovieState extends State<templateMovie> {
                             child: Column(
                               children: [
                                 Text(
-                                  "${postData[index].ngonNgu}",
+                                  "${widget.postData.ngonNgu}",
                                   style: TextStyle(color: Colors.grey),
                                 )
                               ],
@@ -411,7 +412,7 @@ class _templateMovieState extends State<templateMovie> {
                         children: [
                           Expanded(
                             child: Text(
-                              "${postData[index].textTrailer}",
+                              "${widget.postData.textTrailer}",
                               style: TextStyle(color: Colors.white),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.justify,

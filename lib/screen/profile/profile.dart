@@ -46,7 +46,12 @@ class _profileState extends State<profile> {
                     children: [
                       Container(
                         padding: EdgeInsets.only(top:20, bottom: 20),
-                        child: Image.network("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png", height: 80, width: 80,),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: currentUser.currentUser?.photoURL != null
+                              ? NetworkImage(currentUser.currentUser!.photoURL!)
+                              : NetworkImage("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png"),
+                        ),
                       ),
                     ],
                   ),

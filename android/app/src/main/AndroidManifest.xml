@@ -3,12 +3,16 @@
 
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
 
     <application
         android:label="metiz_cinema"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA6AeaOmBKP8rFIKmKI0GZgSxOfmxFOvlM"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

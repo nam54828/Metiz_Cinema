@@ -65,7 +65,11 @@ class _commingSoonState extends State<commingSoon> {
                         ],
                       ),
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => templateMovie() ));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    templateMovie.create(postData: postData[index])));
                       },
                     );
                   },
