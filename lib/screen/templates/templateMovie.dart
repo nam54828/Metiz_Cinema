@@ -99,7 +99,7 @@ class _templateMovieState extends State<templateMovie> {
                                   Row(
                                     children: [
                                       Icon(
-                                        Icons.timelapse,
+                                        Icons.access_time,
                                         size: 50,
                                         color: Colors.white,
                                       )
@@ -128,7 +128,7 @@ class _templateMovieState extends State<templateMovie> {
                                   Row(
                                     children: [
                                       Icon(
-                                        Icons.calendar_today,
+                                        Icons.date_range_outlined,
                                         size: 50,
                                         color: Colors.white,
                                       )

@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/screen/LOGIN/login.dart';
@@ -27,6 +28,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController addressController = TextEditingController();
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
+  final databaseRef = FirebaseDatabase.instance.reference();
   void showFaileMessage(){
     showDialog(context: context, builder: (BuildContext context) => AlertDialog(
       title: const Text("Register"),
@@ -38,7 +40,6 @@ class _RegisterState extends State<Register> {
       ],
     ));
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -322,25 +323,22 @@ class _RegisterState extends State<Register> {
                               email: emailController.text,
                               password: passwordController.text
                           ).then((value) {
-                            firestore.collection("user").add({
-                              "fullname":fullnameController.text,
-                              "birthday": birthdayController.text,
-                              "email": emailController.text,
-                              "cmnd": cmndController.text,
-                              "phone": phoneController.text,
-                              "password": passwordController.text,
-                              "city": cityController.text,
-                              "district": districtController.text,
-                              "address": addressController.text,
-                              "uid": auth.currentUser!.uid
+                            databaseRef.child('users').child(value.user!.uid).set({
+                              'fullname': fullnameController.text,
+                              'birthday': birthdayController.text,
+                              'email': emailController.text,
+                              'cmnd': cmndController.text,
+                              'phone': phoneController.text,
+                              'password': passwordController.text,
+                              'city': cityController.text,
+                              'district': districtController.text,
+                              'address': addressController.text,
                             });
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AppBarHome()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AppBarHome()));
                           }).onError((error, stackTrace) {
                             showFaileMessage();
                           });
+
                         },
                         color: Colors.orange,
                         minWidth: 330,

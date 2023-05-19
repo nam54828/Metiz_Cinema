@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/screen/Content_about/about_setting.dart';
@@ -61,33 +62,19 @@ class _profileState extends State<profile> {
                       Container(
                         child:  Expanded(
                           child: StreamBuilder(
-                            stream: FirebaseFirestore.instance
-                                .collection("user")
-                                .where("uid",
-                                isEqualTo: currentUser.currentUser!.uid)
-                                .snapshots(),
-                            builder:
-                                (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            stream: FirebaseDatabase.instance.ref().child('users').child(currentUser.currentUser!.uid).child('fullname').onValue,
+                            builder: (BuildContext context, AsyncSnapshot<DatabaseEvent> snapshot) {
                               if (snapshot.hasData) {
-                                return ListView.builder(
-                                  itemCount: snapshot.data!.docs.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, i) {
-                                    var data = snapshot.data!.docs[i];
-                                    return InkWell(
-                                      child: Center(
-                                        child: Text(
-                                          data['fullname'],
-                                          style: TextStyle(
-                                              color:
-                                              Color.fromRGBO(255, 255, 255, 1),
-                                              fontFamily: 'Satoshi-Bold',
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                final fullname = snapshot.data?.snapshot.value?.toString() ?? '';
+                                return Center(
+                                  child: Text(
+                                    fullname,
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(255, 255, 255, 1),
+                                        fontFamily: 'Satoshi-Bold',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700),
+                                  ),
                                 );
                               } else {
                                 return CircularProgressIndicator();

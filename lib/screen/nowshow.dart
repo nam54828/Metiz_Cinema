@@ -36,44 +36,48 @@ class _nowShowState extends State<nowShow> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(14, 29, 47, 1),
       body: SingleChildScrollView(
-        child: isLoading ? Center(
-          child: CircularProgressIndicator(),
-        ) : Container(
-          margin: EdgeInsets.only(top: 5),
-          child: Column(
-            children: [
-              CarouselSlider.builder(
-                options: CarouselOptions(height: 480,
-                    enlargeCenterPage: true ,//Hình nổi lên
-                    enlargeStrategy: CenterPageEnlargeStrategy.height,
-                    pageSnapping: true
+          child: isLoading ?
+          Container(
+            margin: EdgeInsets.only(top: 200),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ) : Container(
+            margin: EdgeInsets.only(top: 5),
+            child: Column(
+              children: [
+                CarouselSlider.builder(
+                  options: CarouselOptions(height: 480,
+                      enlargeCenterPage: true ,//Hình nổi lên
+                      enlargeStrategy: CenterPageEnlargeStrategy.height,
+                      pageSnapping: true
+                  ),
+                  itemCount: postData.length,
+                  itemBuilder: (context, index, realIndex){
+                    final urlImage = postData[index].image;
+                    return InkWell(
+                      child: Column(
+                        children: [
+                          Container(
+                            height:360,
+                            child: buildImage(urlImage!, index),
+                          ),
+                          buildText(index),
+                        ],
+                      ),
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    templateMovie.create(postData: postData[index])));
+                      },
+                    );
+                  },
                 ),
-                itemCount: postData.length,
-                itemBuilder: (context, index, realIndex){
-                  final urlImage = postData[index].image;
-                  return InkWell(
-                    child: Column(
-                      children: [
-                        Container(
-                          height:360,
-                          child: buildImage(urlImage!, index),
-                        ),
-                        buildText(index),
-                      ],
-                    ),
-                    onTap: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  templateMovie.create(postData: postData[index])));
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        )
+              ],
+            ),
+          )
       ),
     );
   }

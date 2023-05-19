@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:metiz_cinema/components/app_bar_home.dart';
 import 'package:metiz_cinema/components/date_selector.dart';
 import 'package:metiz_cinema/models/post.dart';
+import 'package:metiz_cinema/screen/Ticket/chonGhe.dart';
+import 'package:metiz_cinema/screen/templates/templateMovie.dart';
 import 'package:metiz_cinema/services/movies.dart';
 
 import '../components/time_selector.dart';
@@ -67,30 +69,73 @@ class _showTimesState extends State<showTimes> {
                           children: [
                             Container(
                               margin: EdgeInsets.only(top: 120),
-                              color: Colors.white,
                               height: 150,
                               width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                borderRadius: BorderRadius.circular(5)
+                              ),
                             ),
                             Row(
                               children: [
                                 Column(
                                   children: [
                                     Container(
-                                      child: Image.network("${postData[index].image}", height: 200, width: 150),
+                                      padding: EdgeInsets.all(8),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.network("${postData[index].image}", height: 200, width: 130, fit: BoxFit.cover,),
+                                      ),
                                     ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
+
                                     Container(
-                                      color: Colors.white54,
-                                      child: Text("20:30-22:05"),
+                                      child: InkWell(
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Container(
+                                                width: 80,
+                                                height: 30,
+                                                child: Center(
+                                                  child: Text("17:25-19:45" , style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black
+                                                  ),),
+                                                ),
+                                                decoration: BoxDecoration(
+                                                color: Colors.grey.shade300,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 80,
+                                              height: 30,
+                                              child: Center(
+                                                child: Text("17:25-19:45" , style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black
+                                                ),),
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey.shade300,
+                                                  borderRadius: BorderRadius.circular(5)
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        onTap: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => SeatBookingPage(postData: postData[index])));
+                                        },
+                                      ),
                                     )
                                   ],
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 80,
-                                      left: 20
+                                      left: 5
                                   ),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +143,11 @@ class _showTimesState extends State<showTimes> {
                                       Text("${postData[index].tenPhim} (${postData[index].phong})", style: TextStyle(
                                         fontWeight: FontWeight.bold
                                       ),),
-                                      Text("Thời lượng ${postData[index].thoiLuong} phút")
+                                      SizedBox(height: 10,),
+                                      Text("Thời lượng ${postData[index].thoiLuong} phút" , style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400
+                                      ),)
                                     ],
                                   ),
                                 )
