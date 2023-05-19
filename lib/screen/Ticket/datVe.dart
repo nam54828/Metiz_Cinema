@@ -40,7 +40,7 @@ class _datVeState extends State<datVe> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  Navigator.of(context).pop();
                                 },
                                 icon: Icon(
                                   Icons.arrow_back,

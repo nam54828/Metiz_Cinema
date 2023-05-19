@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:metiz_cinema/constants/constants.dart';
 import 'package:metiz_cinema/models/post.dart';
+import 'package:metiz_cinema/screen/Ticket/membercard.dart';
+import 'package:metiz_cinema/screen/Ticket/pay.dart';
 
 class SeatBookingPage extends StatefulWidget {
 final Post postData;
@@ -16,6 +18,23 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
   List<Seat> selectedSeats = [];
 
   double totalPrice = 0;
+  calculateTotalPrice() {
+    setState(() {
+      totalPrice = selectedSeats.fold(0, (total, seat) => total + seat.price);
+    });
+  }
+  void confirmPayment() {
+    // Tính toán tổng giá trị và gán vào biến `totalPrice`
+    double totalPrice = calculateTotalPrice();
+
+    // Chuyển sang trang thanh toán, truyền giá trị `totalPrice` vào hàm `pay`
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => pay( postData: widget.postData, totalPrice: totalPrice),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -34,11 +53,6 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
     }
   }
 
-  void calculateTotalPrice() {
-    setState(() {
-      totalPrice = selectedSeats.fold(0, (total, seat) => total + seat.price);
-    });
-  }
 // Hàm tính toán số lượng ghế đã chọn
   int countSelectedSeats() {
     return selectedSeats.where((seat) => seat.status == SeatStatus.booked).length;
@@ -242,23 +256,18 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                     context: context,
                     builder: (_) => AlertDialog(
                       title: Text("ĐẶT VÉ"),
-                      content: Text("Your booking has been confirmed."),
+                      content: Text("Vui lòng kiểm tra lại thông tin vé."),
                       actions: [
                         TextButton(
                             child: Text("OK"),
                             onPressed: () {
                               // navigate back to home page
-                              Navigator.of(context).pop();
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => membercard(postData: widget.postData, totalPrice: totalPrice)));
                             })
                       ],
                     ),
                   );
 
-                  // clear selected seats and total price
-                  setState(() {
-                    selectedSeats.clear();
-                    totalPrice = 0;
-                  });
                 } else {
                   showDialog(
                     context: context,

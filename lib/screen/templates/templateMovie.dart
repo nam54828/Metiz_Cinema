@@ -45,10 +45,7 @@ class _templateMovieState extends State<templateMovie> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Movies()));
+                                  Navigator.of(context).pop();
                                 },
                                 icon: Icon(
                                   Icons.arrow_back,
