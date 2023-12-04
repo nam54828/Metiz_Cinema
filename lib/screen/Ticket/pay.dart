@@ -12,7 +12,7 @@ class pay extends StatefulWidget {
 }
 
 class _payState extends State<pay> {
-  bool ischecked = false;
+  int selectedButton = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -204,9 +204,9 @@ class _payState extends State<pay> {
                     children: [
                       IconButton(onPressed: (){
                         setState(() {
-                        ischecked != ischecked;
+                          selectedButton = 0;
                       });
-                      }, icon: ischecked ? Icon(Icons.radio_button_unchecked, color: Colors.orange,) : Icon(Icons.radio_button_checked,color: Colors.orange,)),
+                      }, icon: selectedButton == 0 ?  Icon(Icons.radio_button_checked,color: Colors.orange,): Icon(Icons.radio_button_unchecked, color: Colors.orange,)),
                       Image.asset("images/card.png", width: 50,),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
@@ -220,9 +220,9 @@ class _payState extends State<pay> {
                     children: [
                       IconButton(onPressed: (){
                         setState(() {
-                          ischecked != ischecked;
+                          selectedButton = 1;
                         });
-                      }, icon: ischecked ? Icon(Icons.radio_button_unchecked, color: Colors.orange,) : Icon(Icons.radio_button_checked,color: Colors.orange,)),
+                      }, icon: selectedButton == 1 ?  Icon(Icons.radio_button_checked,color: Colors.orange,) : Icon(Icons.radio_button_unchecked, color: Colors.orange,) ),
                       Image.asset("images/cardmetiz.png" , width: 50,),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
@@ -236,9 +236,9 @@ class _payState extends State<pay> {
                     children: [
                       IconButton(onPressed: (){
                         setState(() {
-                          ischecked =! ischecked;
+                          selectedButton = 2;
                         });
-                      }, icon:ischecked ? Icon(Icons.radio_button_unchecked, color: Colors.orange,) : Icon(Icons.radio_button_checked_outlined,color: Colors.orange,)),
+                      }, icon:selectedButton == 2 ? Icon(Icons.radio_button_checked_outlined,color: Colors.orange,) : Icon(Icons.radio_button_unchecked, color: Colors.orange,)),
                       Image.asset("images/helio.png", width: 50,),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),

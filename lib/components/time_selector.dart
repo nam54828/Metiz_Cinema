@@ -96,7 +96,7 @@ class _TimeSelectorState extends State<TimeSelector> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            FlatButton(
+                            TextButton(
                               child: Text("Hủy",style: TextStyle(
                                   color: Colors.blue
                               )),
@@ -104,7 +104,7 @@ class _TimeSelectorState extends State<TimeSelector> {
                                 Navigator.of(context).pop();
                               },
                             ),
-                            FlatButton(
+                            TextButton(
                               child: Text("Đồng ý",style: TextStyle(
                                   color: Colors.blue
                               )),

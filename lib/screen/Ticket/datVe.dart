@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:metiz_cinema/components/date_selector.dart';
 import 'package:metiz_cinema/components/time_selector.dart';
 import 'package:metiz_cinema/models/post.dart';
-import 'package:metiz_cinema/screen/movies.dart';
-import 'package:metiz_cinema/screen/templates/templateMovie.dart';
-import 'package:metiz_cinema/services/movies.dart';
 
 class datVe extends StatefulWidget {
   final Post postData;
@@ -91,7 +88,7 @@ class _datVeState extends State<datVe> {
                                   Row(
                                     children: [
                                       Icon(
-                                        Icons.timelapse,
+                                        Icons.access_time,
                                         size: 50,
                                         color: Colors.white,
                                       )
@@ -120,7 +117,7 @@ class _datVeState extends State<datVe> {
                                   Row(
                                     children: [
                                       Icon(
-                                        Icons.calendar_today,
+                                        Icons.date_range_outlined,
                                         size: 50,
                                         color: Colors.white,
                                       )
@@ -153,12 +150,14 @@ class _datVeState extends State<datVe> {
                                       mainAxisAlignment:
                                       MainAxisAlignment.center,
                                       children: [
-                                        Container(
-                                          padding: EdgeInsets.only(right: 5),
-                                          child: Text(
-                                            "Xem Trailer",
-                                            style:
-                                            TextStyle(color: Colors.white),
+                                        InkWell(
+                                          child: Container(
+                                            padding: EdgeInsets.only(right: 5),
+                                            child: Text(
+                                              "Xem Trailer",
+                                              style:
+                                              TextStyle(color: Colors.white),
+                                            ),
                                           ),
                                         ),
                                         Container(

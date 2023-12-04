@@ -128,7 +128,7 @@ class _MoviesState extends State<Movies> {
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Center(
-                                child: FlatButton(
+                                child: TextButton(
                                   child: Text(
                                     "ĐẶT VÉ",
                                     style: TextStyle(

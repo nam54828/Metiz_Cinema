@@ -60,8 +60,8 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      backgroundColor: Color.fromRGBO(14, 29, 47, 1),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -155,6 +155,26 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                 selectedSeats: selectedSeats,
                 onSelected: calculateTotalPrice),
           ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.circle_rounded, size: 20, color: Colors.white,),
+            Text("Ghế Thường",style: TextStyle(
+              color: Colors.white
+            ),),
+            Icon(Icons.circle_rounded, size: 20, color: Colors.orangeAccent,),
+            Text("Ghế Vip",style: TextStyle(
+                color: Colors.white
+            ),),
+            Icon(Icons.circle_rounded, size: 20, color: Colors.black45,),
+            Text("Đang Chọn",style: TextStyle(
+                color: Colors.white
+            ),),
+          ],
+        ),
+          Divider(
+            color: Colors.white,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -166,7 +186,8 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                       children: [
                         Text(
                           'Hàng ghế đã chọn:',
-                          style: TextStyle(fontSize: 16.0),
+                          style: TextStyle(fontSize: 16.0,
+                          color: Colors.white),
                         ),
                       ],
                     ),
@@ -183,7 +204,8 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                                  margin: EdgeInsets.symmetric(horizontal: 4.0),
                                  child: Text(
                                    '${seat.number}.${seat.row + 1}',
-                                   style: TextStyle(fontSize: 16.0),
+                                   style: TextStyle(fontSize: 16.0,
+                                   color: Colors.white),
                                  ),
                                ),
                              )
@@ -193,6 +215,7 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                     )
                   ],
                 ),
+                SizedBox(height: 15,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -200,7 +223,8 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                       children: [
                         Text(
                           'Số ghế đã chọn:',
-                          style: TextStyle(fontSize: 16.0),
+                          style: TextStyle(fontSize: 16.0,
+                          color: Colors.white),
                         ),
                       ],
                     ),
@@ -214,6 +238,9 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                     )
                   ],
                 ),
+                SizedBox(
+                  height: 15,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -221,7 +248,8 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
                       children: [
                         Text(
                           'Tổng số tiền:',
-                          style: TextStyle(fontSize: 16.0),
+                          style: TextStyle(fontSize: 16.0,
+                          color: Colors.white),
                         ),
                       ],
                     ),
@@ -238,56 +266,65 @@ class _SeatBookingPageState extends State<SeatBookingPage> {
               ],
             ),
           ),
-          SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: () {
-              if (selectedSeats.isNotEmpty) {
-                // assume we have a payment gateway
-                bool paymentSuccessful = true;
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20, top: 30),
+            child: ElevatedButton(
+              onPressed: () {
+                if (selectedSeats.isNotEmpty) {
+                  // assume we have a payment gateway
+                  bool paymentSuccessful = true;
 
-                if (paymentSuccessful) {
-                  // mark seats as booked
-                  for (var seat in selectedSeats) {
-                    seat.status = SeatStatus.booked;
+                  if (paymentSuccessful) {
+                    // mark seats as booked
+                    for (var seat in selectedSeats) {
+                      seat.status = SeatStatus.booked;
+                    }
+
+                    // show confirmation dialog
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text("ĐẶT VÉ"),
+                        content: Text("Vui lòng kiểm tra lại thông tin vé."),
+                        actions: [
+                          TextButton(
+                              child: Text("OK"),
+                              onPressed: () {
+                                // navigate back to home page
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => membercard(postData: widget.postData, totalPrice: totalPrice)));
+                              })
+                        ],
+                      ),
+                    );
+
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text("Payment Failed"),
+                        content:
+                            Text("There was an error processing your payment."),
+                        actions: [
+                          TextButton(
+                              child: Text("OK"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              })
+                        ],
+                      ),
+                    );
                   }
-
-                  // show confirmation dialog
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: Text("ĐẶT VÉ"),
-                      content: Text("Vui lòng kiểm tra lại thông tin vé."),
-                      actions: [
-                        TextButton(
-                            child: Text("OK"),
-                            onPressed: () {
-                              // navigate back to home page
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => membercard(postData: widget.postData, totalPrice: totalPrice)));
-                            })
-                      ],
-                    ),
-                  );
-
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: Text("Payment Failed"),
-                      content:
-                          Text("There was an error processing your payment."),
-                      actions: [
-                        TextButton(
-                            child: Text("OK"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            })
-                      ],
-                    ),
-                  );
                 }
-              }
-            },
-            child: Text('TIẾP TỤC'),
+              },
+              child: Text('TIẾP TỤC'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.orange, // set background color here
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30), // set radius here
+                ),
+                minimumSize: Size(MediaQuery.of(context).size.width * 0.9, 50), // set width to full here
+              ),
+            ),
           ),
         ],
       ),

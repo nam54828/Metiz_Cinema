@@ -354,13 +354,13 @@ class _informationState extends State<information> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FlatButton.icon(
+              TextButton.icon(
                   onPressed: () {
                     takePhoto(ImageSource.camera);
                   },
                   icon: Icon(Icons.camera),
                   label: Text("Camera")),
-              FlatButton.icon(
+              TextButton.icon(
                   onPressed: () {
                     takePhoto(ImageSource.gallery);
                   },
